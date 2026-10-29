@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AttendEase — a smart, simple attendance tracking and management system for students, faculty and administrators.">
+<title>AttendEase — Smart Attendance Management</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--navy:#14213d;--blue:#4263eb;--blue2:#6c8cff;--mint:#dff8ee;--ink:#172033;--muted:#68738a;--paper:#f7f9ff;--line:#e8ecf5;--white:#fff;--shadow:0 20px 55px rgba(31,52,110,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--white);line-height:1.6}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+.wrap{width:min(1160px,91%);margin:auto}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(232,236,245,.8)}
+.nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;font-family:Manrope,sans-serif;font-weight:800;font-size:1.25rem;letter-spacing:-.6px}
+.brand-mark{width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,var(--blue),#7b61ff);display:grid;place-items:center;color:white;box-shadow:0 8px 18px #4263eb44}
+.brand-mark svg{width:23px}
+.navlinks{display:flex;align-items:center;gap:30px;color:#5d6780;font-size:.94rem}
+.navlinks a:hover{color:var(--blue)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn{border:0;border-radius:12px;padding:12px 19px;font-weight:700;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{transform:translateY(-2px)}
+.btn-outline{border:1px solid var(--line);background:white;color:var(--ink)}
+.btn-primary{background:var(--blue);color:white;box-shadow:0 9px 20px #4263eb35}
+.btn-primary:hover{background:#3453d7}
+.menu{display:none;background:none;border:0;font-size:1.5rem}
+.hero{overflow:hidden;position:relative;background:radial-gradient(ellipse at 80% 15%,#e8edff 0,transparent 38%),linear-gradient(180deg,#fbfcff,#fff);padding:82px 0 78px}
+.hero-grid{display:grid;grid-template-columns:1.03fr .97fr;gap:54px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #dce4ff;background:#f1f4ff;color:#3d57c9;border-radius:30px;padding:7px 13px;font-weight:700;font-size:.8rem;margin-bottom:23px}
+.dot{width:8px;height:8px;background:#43bd8a;border-radius:50%;box-shadow:0 0 0 4px #43bd8a22}
+h1,h2,h3{font-family:Manrope,sans-serif;letter-spacing:-1.2px;line-height:1.15}
+h1{font-size:clamp(2.8rem,5.2vw,4.55rem);max-width:650px}
+h1 span{color:var(--blue);position:relative}
+.hero-copy{font-size:1.08rem;color:var(--muted);max-width:535px;margin:24px 0 29px}
+.hero-buttons{display:flex;gap:13px;flex-wrap:wrap}
+.trust{display:flex;align-items:center;gap:13px;margin-top:30px;color:var(--muted);font-size:.86rem}
+.avatars{display:flex;padding-left:5px}
+.avatar{margin-left:-5px;border:2px solid white;border-radius:50%;width:31px;height:31px;display:grid;place-items:center;background:#dce5ff;font-size:.7rem}
+.avatar:nth-child(2){background:#ffe5d5}.avatar:nth-child(3){background:#d9f5e7}.avatar:nth-child(4){background:#f0ddff}
+.dashboard{background:white;border:1px solid #e9edfa;border-radius:24px;padding:22px;box-shadow:0 30px 80px #243b7c1b;transform:rotate(1deg);position:relative}
+.dash-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.dash-title{font-family:Manrope;font-weight:800;font-size:1rem}
+.dash-sub{color:#8992a8;font-size:.75rem}
+.today{background:#f1f4ff;color:#4561d9;border-radius:9px;padding:8px 11px;font-size:.72rem;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:#f8f9fe;border:1px solid #f0f2fa;border-radius:14px;padding:13px}
+.stat-label{color:#7d879c;font-size:.7rem}
+.stat-number{font-family:Manrope;font-size:1.45rem;font-weight:800;margin:4px 0}
+.stat-change{font-size:.68rem;color:#20a875}
+.chart-card{margin-top:14px;border:1px solid #eef0f7;border-radius:15px;padding:16px}
+.chart-head{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:.8rem}
+.chart-head span{font-size:.68rem;color:#8b94a7;font-weight:500}
+.chart{height:112px;display:flex;align-items:end;gap:12px;padding:14px 7px 0;border-bottom:1px solid #e8ecf5;background:repeating-linear-gradient(to bottom,transparent 0,transparent 27px,#f0f2f8 28px)}
+.bar{flex:1;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#8197ff,#4263eb);min-width:8px;position:relative}
+.bar:nth-child(2n){background:linear-gradient(180deg,#a8b7ff,#7188f5)}
+.chart-labels{display:flex;justify-content:space-around;color:#9aa2b3;font-size:.62rem;margin-top:7px}
+.activity{display:flex;align-items:center;gap:10px;padding-top:14px}
+.activity-icon{width:35px;height:35px;border-radius:11px;background:#e2f8ef;color:#1a9c6c;display:grid;place-items:center;font-weight:800}
+.activity strong{display:block;font-size:.76rem}.activity small{color:#929bad;font-size:.68rem}
+.activity .present{margin-left:auto;background:#e2f8ef;color:#18865e;border-radius:7px;padding:5px 8px;font-size:.66rem;font-weight:700}
+.floating{position:absolute;background:white;border:1px solid #eef0f7;border-radius:14px;box-shadow:var(--shadow);padding:13px 16px;display:flex;align-items:center;gap:10px}
+.float-one{left:-35px;bottom:56px}.float-two{right:-23px;top:82px}
+.float-icon{width:34px;height:34px;border-radius:11px;background:#fff0da;display:grid;place-items:center}
+.float-one strong,.float-two strong{font-family:Manrope;display:block;font-size:.88rem}
+.floating small{display:block;color:#8490a5;font-size:.67rem}
+section{padding:84px 0}
+.section-heading{text-align:center;max-width:670px;margin:0 auto 42px}
+.kicker{color:var(--blue);font-weight:800;text-transform:uppercase;letter-spacing:1.6px;font-size:.72rem;margin-bottom:12px}
+h2{font-size:clamp(2rem,3.7vw,3rem)}
+.section-heading p{color:var(--muted);margin-top:15px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feature{padding:27px;border:1px solid var(--line);border-radius:20px;background:white;transition:.25s}
+.feature:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:#d8e0ff}
+.feature-icon{width:49px;height:49px;border-radius:15px;display:grid;place-items:center;margin-bottom:20px;font-size:1.35rem}
+.fi-blue{background:#e9edff}.fi-green{background:#e0f8ed}.fi-orange{background:#fff0dc}.fi-purple{background:#f0e7ff}.fi-pink{background:#ffe8f0}.fi-cyan{background:#e1f7fc}
+.feature h3{font-size:1.12rem;letter-spacing:-.4px;margin-bottom:10px}
+.feature p{font-size:.92rem;color:var(--muted)}
+.roles-section{background:var(--paper)}
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.role{background:white;border:1px solid var(--line);border-radius:20px;padding:28px}
+.role-top{display:flex;align-items:center;gap:13px;margin-bottom:17px}
+.role-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;font-size:1.35rem;background:#e9edff}
+.role:nth-child(2) .role-icon{background:#e0f8ed}.role:nth-child(3) .role-icon{background:#fff0dc}
+.role h3{font-size:1.15rem;letter-spacing:-.4px}
+.role p{font-size:.91rem;color:var(--muted);margin-bottom:15px}
+.role ul{list-style:none;display:grid;gap:9px;color:#4f5b72;font-size:.86rem}
+.role li:before{content:'✓';color:#24a879;font-weight:800;margin-right:9px}
+.workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;counter-reset:step}
+.step{position:relative;padding:22px 18px;border-top:2px solid #dfe5ff;counter-increment:step}
+.step:before{content:'0' counter(step);display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:#e9edff;color:var(--blue);font-family:Manrope;font-weight:800;margin-bottom:18px}
+.step h3{font-size:1rem;letter-spacing:-.3px;margin-bottom:9px}
+.step p{font-size:.86rem;color:var(--muted)}
+.cta{padding:0 0 84px}
+.cta-inner{position:relative;overflow:hidden;border-radius:28px;background:linear-gradient(115deg,#18284d,#314bb2 68%,#6478ee);padding:53px 55px;color:white;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.cta-inner:after{content:'';position:absolute;width:300px;height:300px;border:1px solid #ffffff1f;border-radius:50%;right:22%;top:-180px;box-shadow:0 0 0 35px #ffffff08,0 0 0 70px #ffffff08}
+.cta h2{font-size:clamp(1.8rem,3vw,2.6rem);max-width:620px;position:relative;z-index:1}
+.cta p{color:#dce3ff;margin-top:13px;position:relative;z-index:1}
+.cta .btn{background:white;color:#2d49bd;white-space:nowrap;position:relative;z-index:1}
+footer{border-top:1px solid var(--line);padding:28px 0;color:#7b8498;font-size:.84rem}
+.footer-row{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.footer-links{display:flex;gap:20px}.footer-links a:hover{color:var(--blue)}
+.modal-backdrop{position:fixed;inset:0;background:#101a32a6;z-index:30;display:none;place-items:center;padding:20px}
+.modal-backdrop.show{display:grid}
+.modal{background:white;border-radius:22px;padding:30px;width:min(420px,100%);box-shadow:0 25px 80px #0003;position:relative}
+.modal h2{font-size:1.7rem;margin-bottom:8px}.modal p{color:var(--muted);font-size:.9rem;margin-bottom:20px}
+.modal label{display:block;font-size:.82rem;font-weight:700;margin:13px 0 6px}
+.modal input,.modal select{width:100%;border:1px solid #dfe4f0;border-radius:10px;padding:12px;font:inherit;outline:none}
+.modal input:focus,.modal select:focus{border-color:var(--blue)}
+.modal .btn{width:100%;margin-top:18px}
+.close{position:absolute;right:17px;top:12px;border:0;background:none;font-size:1.6rem;color:#778097}
+#formMessage{font-size:.82rem;margin-top:12px;color:#16865d;display:none}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:48px}.hero-copy{max-width:650px}.dashboard{max-width:600px;width:100%;margin:0 auto}.features,.roles{grid-template-columns:repeat(2,1fr)}.workflow{grid-template-columns:repeat(2,1fr)}.navlinks{gap:17px}}
+@media(max-width:650px){.nav{height:68px}.navlinks{display:none;position:absolute;top:68px;left:0;right:0;background:white;padding:20px 5%;border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start}.navlinks.open{display:flex}.nav-actions .btn-outline{display:none}.menu{display:block}.hero{padding:57px 0 65px}.hero-grid{gap:38px}h1{font-size:2.75rem}.hero-copy{font-size:1rem}.dashboard{padding:15px;border-radius:19px}.stats{gap:6px}.stat{padding:10px}.stat-number{font-size:1.2rem}.float-one{left:-8px;bottom:35px}.float-two{right:-5px;top:48px}.floating{padding:9px 11px}.features,.roles{grid-template-columns:1fr}.feature,.role{padding:23px}section{padding:65px 0}.workflow{grid-template-columns:1fr;gap:8px}.step{padding:18px}.cta{padding-bottom:65px}.cta-inner{padding:35px 25px;display:block}.cta .btn{margin-top:23px}.footer-row{flex-direction:column;text-align:center}.footer-links{flex-wrap:wrap;justify-content:center}.trust{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#home" aria-label="AttendEase home">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10a2 2 0 0 1 2 2v16H5V5a2 2 0 0 1 2-2Z"/><path d="m8 12 2.5 2.5L16 9"/></svg></span>
+      AttendEase
+    </a>
+    <nav class="navlinks" id="navlinks">
+      <a href="#features">Features</a><a href="#roles">Who it's for</a><a href="#workflow">How it works</a>
+    </nav>
+    <div class="nav-actions"><button class="btn btn-outline" data-open="login">Log in</button><button class="btn btn-primary" data-open="demo">Get started <span>↗</span></button><button class="menu" id="menuBtn" aria-label="Open menu">☰</button></div>
+  </div>
+</header>
+<main>
+<section class="hero" id="home">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Attendance management, made simple</div>
+      <h1>Less paperwork.<br>More <span>possibilities.</span></h1>
+      <p class="hero-copy">Meet AttendEase — a smarter way to record, track, and manage attendance. Keep students, faculty, and administrators connected with one simple platform.</p>
+      <div class="hero-buttons"><button class="btn btn-primary" data-open="demo">Explore AttendEase <span>→</span></button><a class="btn btn-outline" href="#features">Discover features ↓</a></div>
+      <div class="trust"><div class="avatars"><span class="avatar">🎓</span><span class="avatar">👩‍🏫</span><span class="avatar">🧑‍💻</span><span class="avatar">✓</span></div><span>Designed for smoother, smarter attendance</span></div>
+    </div>
+    <div class="dashboard" aria-label="Illustrative attendance dashboard">
+      <div class="dash-top"><div><div class="dash-title">Attendance overview</div><div class="dash-sub">A quick look at your campus</div></div><span class="today">This week⌄</span></div>
+      <div class="stats">
+        <div class="stat"><div class="stat-label">Attendance rate</div><div class="stat-number">94.8%</div><div class="stat-change">↗ On track</div></div>
+        <div class="stat"><div class="stat-label">Present today</div><div class="stat-number">1,248</div><div class="stat-change">Across all classes</div></div>
+        <div class="stat"><div class="stat-label">Need attention</div><div class="stat-number">08</div><div style="font-size:.68rem;color:#d18a2b">Low attendance</div></div>
+      </div>
+      <div class="chart-card"><div class="chart-head">Weekly attendance <span>Mon – Sun</span></div>
+        <div class="chart"><div class="bar" style="height:65%"></div><div class="bar" style="height:82%"></div><div class="bar" style="height:73%"></div><div class="bar" style="height:94%"></div><div class="bar" style="height:77%"></div><div class="bar" style="height:88%"></div><div class="bar" style="height:58%"></div></div>
+        <div class="chart-labels"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+      </div>
+      <div class="activity"><div class="activity-icon">✓</div><div><strong>Computer Science · CSE 2A</strong><small>Attendance recorded just now</small></div><span class="present">Updated</span></div>
+      <div class="floating float-one"><span class="float-icon">🔔</span><div><strong>Smart reminders</strong><small>Stay ahead of low attendance</small></div></div>
+      <div class="floating float-two"><span class="float-icon" style="background:#e5eaff">📊</span><div><strong>Clear insights</strong><small>Reports at a glance</small></div></div>
+    </div>
+  </div>
+</section>
+<section id="features">
+  <div class="wrap">
+    <div class="section-heading"><div class="kicker">Everything in one place</div><h2>Simple tools. Smarter decisions.</h2><p>From daily attendance marking to useful reports, AttendEase helps make the whole process more organised and reliable.</p></div>
+    <div class="features">
+      <article class="feature"><div class="feature-icon fi-blue">🗓️</div><h3>Quick attendance marking</h3><p>Record daily attendance in a few clicks and keep class records organised in one place.</p></article>
+      <article class="feature"><div class="feature-icon fi-green">📈</div><h3>Automatic percentage</h3><p>Calculate attendance percentages automatically and understand attendance trends over time.</p></article>
+      <article class="feature"><div class="feature-icon fi-orange">🔔</div><h3>Low-attendance alerts</h3><p>Help students notice when their attendance needs attention with timely reminders.</p></article>
+      <article class="feature"><div class="feature-icon fi-purple">🔐</div><h3>Secure role-based access</h3><p>Separate student, faculty, and administrator access keeps information organised by role.</p></article>
+      <article class="feature"><div class="feature-icon fi-pink">🔎</div><h3>Search and filter</h3><p>Find student records and class-wise attendance quickly without searching through paperwork.</p></article>
+      <article class="feature"><div class="feature-icon fi-cyan">📄</div><h3>Useful reports</h3><p>View class summaries and consolidated reports to support informed decisions.</p></article>
+    </div>
+  </div>
+</section>
+<section class="roles-section" id="roles">
+  <div class="wrap">
+    <div class="section-heading"><div class="kicker">Made for your campus</div><h2>A clear view for every role.</h2><p>Everyone gets the tools they need, with a shared and consistent source of attendance information.</p></div>
+    <div class="roles">
+      <article class="role"><div class="role-top"><div class="role-icon">🎓</div><h3>For students</h3></div><p>Know where you stand and stay informed about your attendance.</p><ul><li>View personal attendance records</li><li>Track attendance percentage</li><li>Receive low-attendance alerts</li></ul></article>
+      <article class="role"><div class="role-top"><div class="role-icon">👩‍🏫</div><h3>For faculty</h3></div><p>Spend less time on paperwork and more time supporting students.</p><ul><li>Mark daily class attendance</li><li>Manage student records</li><li>View class-wise reports</li></ul></article>
+      <article class="role"><div class="role-top"><div class="role-icon">🛡️</div><h3>For administrators</h3></div><p>Get a broader view of attendance across departments and users.</p><ul><li>Oversee attendance data</li><li>Manage users and departments</li><li>Generate consolidated reports</li></ul></article>
+    </div>
+  </div>
+</section>
+<section id="workflow">
+  <div class="wrap">
+    <div class="section-heading"><div class="kicker">How it works</div><h2>From sign-in to insight.</h2><p>A straightforward workflow designed to keep attendance information accurate, accessible, and useful.</p></div>
+    <div class="workflow">
+      <article class="step"><h3>Sign in securely</h3><p>Users access the features available to their role.</p></article>
+      <article class="step"><h3>Record attendance</h3><p>Faculty mark students present or absent for each class.</p></article>
+      <article class="step"><h3>Calculate automatically</h3><p>The system updates records and attendance percentages.</p></article>
+      <article class="step"><h3>Review reports</h3><p>Students and staff use summaries to make informed decisions.</p></article>
+    </div>
+  </div>
+</section>
+<section class="cta">
+  <div class="wrap"><div class="cta-inner"><div><h2>Make attendance the easiest part of the day.</h2><p>Bring records, reminders, and reports together with AttendEase.</p></div><button class="btn" data-open="demo">Get started with AttendEase <span>→</span></button></div></div>
+</section>
+</main>
+<footer><div class="wrap footer-row"><a class="brand" href="#home"><span class="brand-mark">✓</span>AttendEase</a><span>© <span id="year"></span> AttendEase. Built for smarter attendance.</span><div class="footer-links"><a href="#features">Features</a><a href="#roles">User roles</a><a href="#home">Back to top ↑</a></div></div></footer>
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal"><button class="close" id="closeModal" aria-label="Close dialog">×</button><h2 id="modalTitle">Welcome to AttendEase</h2><p id="modalDescription">Enter your details to explore the attendance management experience.</p>
+    <form id="demoForm"><label for="name">Full name</label><input id="name" name="name" placeholder="Your name" required><label for="email">Email address</label><input id="email" name="email" type="email" placeholder="you@example.com" required><label for="role">I am a...</label><select id="role" name="role"><option>Student</option><option>Faculty member</option><option>Administrator</option></select><button class="btn btn-primary" type="submit" id="submitBtn">Continue →</button><div id="formMessage" role="status"></div></form>
+  </div>
+</div>
+<script>
+const menuBtn=document.getElementById('menuBtn'), navlinks=document.getElementById('navlinks');
+menuBtn.addEventListener('click',()=>{navlinks.classList.toggle('open');menuBtn.textContent=navlinks.classList.contains('open')?'×':'☰'});
+navlinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navlinks.classList.remove('open');menuBtn.textContent='☰'}));
+const backdrop=document.getElementById('modalBackdrop'), title=document.getElementById('modalTitle'), desc=document.getElementById('modalDescription'), formMessage=document.getElementById('formMessage');
+document.querySelectorAll('[data-open]').forEach(btn=>btn.addEventListener('click',()=>{
+ const isLogin=btn.dataset.open==='login';
+ title.textContent=isLogin?'Log in to AttendEase':'Let’s explore AttendEase';
+ desc.textContent=isLogin?'This is a front-end demo. Enter your details to preview the sign-in flow.':'Share a few details to preview the AttendEase experience.';
+ document.getElementById('submitBtn').textContent=isLogin?'Log in →':'Continue →';
+ formMessage.style.display='none';backdrop.classList.add('show');document.getElementById('name').focus();
+}));
+function closeModal(){backdrop.classList.remove('show')}
+document.getElementById('closeModal').addEventListener('click',closeModal);
+backdrop.addEventListener('click',e=>{if(e.target===backdrop)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+document.getElementById('demoForm').addEventListener('submit',e=>{
+ e.preventDefault();const name=document.getElementById('name').value.trim();
+ formMessage.textContent=`Thanks, ${name}! This demo form is working. Connect a backend to enable real accounts and attendance records.`;
+ formMessage.style.display='block';
+});
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
